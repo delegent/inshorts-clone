@@ -2,18 +2,36 @@
 console.log("Love me like you do");
 // news container
 let data = document.getElementById("data");
-const url =
-  "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=ef801708e3e4475b990250186a3821b6";
-const xhr = new XMLHttpRequest();
-xhr.open("GET", url, true);
-xhr.getResponseHeader("Content-type", "application/json");
-xhr.onload = function () {
-  if (this.status === 200) {
-    let json = JSON.parse(this.responseText);
-    let articles = json.articles;
-    console.log(articles);
-    let newsHTML = "";
-    articles.forEach(function (ele) {
+// const url =
+//   "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=ef801708e3e4475b990250186a3821b6";
+// const xhr = new XMLHttpRequest();
+// xhr.open("GET", url, true);
+// xhr.getResponseHeader("Content-type", "application/json");
+// xhr.onload = function () {
+//   if (this.status === 200) {
+//     let json = JSON.parse(this.responseText);
+//     let articles = json.articles;
+//     console.log(articles);
+    
+  
+//     /*
+		
+// */
+
+    
+//   } else {
+//     console.error("Some error occured!");
+//   }
+// };
+// xhr.send();
+
+window.addEventListener('load',function(){
+  fetch('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=ef801708e3e4475b990250186a3821b6').then(function(res){
+  return res.json()
+}).then(function(data){
+  let newsHTML = "";
+  console.log(data.articles)
+    data.articles.forEach(function (ele) {
       let news = `
 			<div class="data">
 			<div class="data-image-container">
@@ -31,14 +49,12 @@ xhr.onload = function () {
 			
 						`;
       newsHTML += news;
-    });
-    /*
-		
-*/
+      console.log(newsHTML)
+      data.innerHTML = newsHTML;
+})
+}).catch(function(err){
+  console.log(err)
+})
+})
 
-    data.innerHTML = newsHTML;
-  } else {
-    console.error("Some error occured!");
-  }
-};
-xhr.send();
+  
